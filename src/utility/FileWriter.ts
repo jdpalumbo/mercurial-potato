@@ -1,6 +1,5 @@
 import { IFileWriter } from "../interfaces/FileHandlers";
 import * as fs from "fs";
-import { createFileWriter } from "../Factories";
 
 export default class FileWriter implements IFileWriter {
     constructor(protected fileSystem: typeof fs, protected filePath: string) {
