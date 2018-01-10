@@ -1,0 +1,8 @@
+coverage/*
+src/*
+test/*
+README.md
+tsconfig.json
+tslint.json
+.gitignore
+index.html
