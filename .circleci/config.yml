@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    environment:
+      #CC does not stand for Compliance Cloud in this context, it is Code Climate.
+      CC_TEST_REPORTER_ID: 3ad76be8159eb04edc78b86733a1d1ed75784f42678712811c7d52da9f84f0e1
+    docker:
+      - image: circleci/node:8.9.3-alpine
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Building & Linting
+          command: npm run build
+      - run:
+          name:  Download Code Climate Reporter
+          command: |
+                 mkdir -p tmp/
+                 curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+                 chmod +x ./tmp/cc-test-reporter
+      - run:
+          name: Run Tests
+          command: npm test
+      - run:
+          name: Push Coverage To Code Climate
+          command: |
+            ./tmp/cc-test-reporter format-coverage -t lcov -o ./coverage/codeclimate.json ./coverage/lcov.info
+            ./tmp/cc-test-reporter upload-coverage -i ./coverage/codeclimate.json
+      - store_artifacts:
+          path: ./coverage
