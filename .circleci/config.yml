@@ -5,7 +5,7 @@ jobs:
       #CC does not stand for Compliance Cloud in this context, it is Code Climate.
       CC_TEST_REPORTER_ID: 3ad76be8159eb04edc78b86733a1d1ed75784f42678712811c7d52da9f84f0e1
     docker:
-      - image: circleci/node:8.9.3-alpine
+      - image: node:8.9.3-alpine
     working_directory: ~/repo
     steps:
       - checkout
