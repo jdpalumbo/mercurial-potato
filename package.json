@@ -6,11 +6,9 @@
     "url": "https://github.com/jdpalumbo/mercurial-potato.git"
   },
   "engines": {
-    "npm": "5.5.1",
-    "node": "8.9.3"
+    "node": ">=8.0.0"
   },
-  "private": true,
-  "license": "UNLICENSED",
+  "license": "ISC",
   "scripts": {
     "start": "npm run watch",
     "build": "npm run tslint && npm run build-ts",
